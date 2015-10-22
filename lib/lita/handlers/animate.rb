@@ -12,7 +12,7 @@ module Lita
       end
 
       def fetch(response)
-        query = response.matches[0][0]
+        query = "#{response.matches[0][0]} gif"
 
         http_response = http.get(
           URL,
@@ -26,8 +26,20 @@ module Lita
         data = MultiJson.load(http_response.body)
 
         if data["responseStatus"] == 200
-          choice = data["responseData"]["results"].sample
-          response.reply "#{choice["unescapedUrl"]}#.gif"
+          choice = nil
+
+          data["responseData"]["results"].shuffle.each do |result|
+            if /.*\.gif/.match(result["url"])
+              choice = result
+              break
+            end
+          end
+
+          if choice
+            response.reply "#{choice["unescapedUrl"]}"
+          else
+            response.reply "No gifs found for '#{query}' (shrug)."
+          end
         else
           reason = data["responseDetails"] || "unknown error"
           Lita.logger.warn(
