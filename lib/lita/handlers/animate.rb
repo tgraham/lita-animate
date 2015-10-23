@@ -54,7 +54,7 @@ module Lita
       end
 
       def valid_extension?(result)
-        if /^.*\.(jpg|JPG|png|PNG|jpeg|JPEG)/.match(result)
+        if /^.*\.(jpg|png|jpeg)/i.match(result)
           false
         elsif /.*\.gif$/.match(result)
           true
