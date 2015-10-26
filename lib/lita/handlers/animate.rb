@@ -24,7 +24,7 @@ module Lita
           choice = nil
 
           search_payload["responseData"]["results"].shuffle.each do |result|
-            if valid_extension?(result["unescapedUrl"])
+            if  /^((?!jpg|jpeg|png).)*.gif$/i.match(result["unescapedUrl"])
               choice = result
               break
             end
