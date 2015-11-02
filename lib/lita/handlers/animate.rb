@@ -1,7 +1,7 @@
 module Lita
   module Handlers
     class Animate < Handler
-      attr_accessor :response, :search_query, :search_response, :search_results, :gif
+      attr_accessor :lita_response, :search_query, :search_response, :search_results, :gif
 
       URL = "https://ajax.googleapis.com/ajax/services/search/images"
 
@@ -14,12 +14,12 @@ module Lita
       end
 
       def init(response)
-        self.response = response
+        self.lita_response = response
         fetch
       end
 
       def fetch
-        self.search_query = "#{response.matches[0][0]} gif"
+        self.search_query = "#{lita_response.matches[0][0]} gif"
         self.search_response = query_google
         self.search_results = MultiJson.load(search_response.body)
 
@@ -37,22 +37,22 @@ module Lita
         Lita.logger.warn(
           "Couldn't get image from Google: #{reason}"
         )
-        response.reply "(facepalm) An error has occurred when querying Google. Please check Lita's logs."
+        lita_response.reply "(facepalm) An error has occurred when querying Google. Please check Lita's logs."
       end
 
       def reply
         if gif
-          response.reply "#{gif["unescapedUrl"]}"
+          lita_response.reply "#{gif["unescapedUrl"]}"
         else
-          response.reply "No gifs found for '#{search_query}' (shrug)."
+          lita_response.reply "No gifs found for '#{search_query}' (shrug)."
         end
       end
 
       def gif
-        @gif ||= set_gif
+        @gif ||= parse_gif_response
       end
 
-      def set_gif
+      def parse_gif_response
         search_results["responseData"]["results"].shuffle.each do |result|
           if  /^((?!jpg|jpeg|png).)*.gif$/i.match(result["unescapedUrl"])
             return result
