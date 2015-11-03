@@ -1,11 +1,11 @@
 Gem::Specification.new do |spec|
   spec.name          = "lita-animate"
-  spec.version       = "1.1.0"
+  spec.version       = "2.0.0"
   spec.authors       = ["Igor Adrov"]
   spec.email         = ["nucleartux@gmail.com"]
   spec.description   = %q{A Lita handler for fetching gifs from Google.}
   spec.summary       = %q{A Lita handler for fetching gifs from Google.}
-  spec.homepage      = "https://github.com/amaabca/lita-animate"
+  spec.homepage      = "https://github.com/nucleartux/lita-animate"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
