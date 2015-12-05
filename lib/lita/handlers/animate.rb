@@ -32,7 +32,6 @@ module Lita
           safe: config.safe_search,
           num: 8,
           start: rand(1..100),
-          imgSize: "medium",
           searchType: "image",
           fileType: "gif"
         )
