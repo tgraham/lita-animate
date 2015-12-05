@@ -3,9 +3,6 @@ require "lita"
 module Lita
   module Handlers
     class Animate < Handler
-      # attr_accessor :lita_response, :search_query, :search_response, :search_results, :gif
-
-      # URL = "https://ajax.googleapis.com/ajax/services/search/images"
       URL = "https://www.googleapis.com/customsearch/v1/"
       VALID_SAFE_VALUES = %w(high medium off)
 
